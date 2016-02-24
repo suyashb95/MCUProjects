@@ -60,7 +60,7 @@ USB_ClassInfo_HID_Device_t Joystick_HID_Interface =
 	};
 
 RingBuff_t USARTtoUSB_Buffer;
-USB_JoystickReport_Data_t joyReport = {0, 0, 0};
+USB_JoystickReport_Data_t joyReport = {0, 0, 0, 0};
 #define LED_ON_TICKS 2000
 volatile int led1_ticks = 0;
 /** Main program entry point. This routine contains the overall program flow, including initial
