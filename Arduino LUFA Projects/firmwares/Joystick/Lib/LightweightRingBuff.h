@@ -88,6 +88,7 @@
 			{
 				Buffer->In  = Buffer->Buffer;
 				Buffer->Out = Buffer->Buffer;
+				Buffer->Count = 0;
 			}
 		}
 		

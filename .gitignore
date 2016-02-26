@@ -28,6 +28,13 @@
 *.x86_64
 *.hex
 
+*.d
+*.eep
+*.lss
+*.map
+*.sym
+*.bin
+
 # Debug files
 *.dSYM/
 Status API Training Shop Blog About Pricing

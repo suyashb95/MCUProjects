@@ -170,19 +170,20 @@ bool CALLBACK_HID_Device_CreateHIDReport(USB_ClassInfo_HID_Device_t* const HIDIn
                                          void* ReportData,
                                          uint16_t* const ReportSize)
 {
-	USB_JoystickReport_Data_t *report_ptr = (USB_JoystickReport_Data_t*)ReportData;
+	USB_JoystickReport_Data_t *reportPtr = (USB_JoystickReport_Data_t*)ReportData;
 	RingBuff_Count_t BufferCount = RingBuffer_GetCount(&USARTtoUSB_Buffer);
-
+	uint8_t  *joyReportPtr = (uint8_t*)&joyReport;
 	if(BufferCount >= (sizeof(joyReport) + 1)) {
 		uint8_t ind;
 		for(ind = 0; ind<sizeof(joyReport); ind++) {
-			((uint8_t*)&joyReport)[ind] = RingBuffer_Remove(&USARTtoUSB_Buffer);
+			joyReportPtr[ind] = RingBuffer_Remove(&USARTtoUSB_Buffer);
 		}
-		RingBuffer_Remove(&USARTtoUSB_Buffer);
+		if(!RingBuffer_IsEmpty(&USARTtoUSB_Buffer))
+			RingBuffer_Remove(&USARTtoUSB_Buffer);
 		LEDs_TurnOnLEDs(LEDS_LED1);
 		led1_ticks = LED_ON_TICKS;
 	}
-	*report_ptr = joyReport;
+	*reportPtr = joyReport;
 	*ReportSize = sizeof(USB_JoystickReport_Data_t);
 	return false;
 
