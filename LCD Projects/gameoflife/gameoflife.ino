@@ -12,7 +12,7 @@ void setup() {
     SPI.setDataMode(SPI_MODE0);
     SPI.setBitOrder(MSBFIRST);
     SPI.begin();
-    
+
     Tft.lcd_init();
     Tft.lcd_clear_screen(BLACK);
     init_main_grid();
@@ -28,7 +28,6 @@ void loop() {
         }
     }
     copy_grids();
-    //render_grid();
 }
 
 void render_grid() {
@@ -37,14 +36,8 @@ void render_grid() {
             if(is_alive(i, j))
                 Tft.lcd_fill_rect_fast(i*4 + 75, j*4+ 75, 4, 4, RED);
             else
-                Tft.lcd_fill_rect_fast(i*4 + 75, j*4+ 75, 4, 4, BLACK);    
+                Tft.lcd_fill_rect_fast(i*4 + 75, j*4+ 75, 4, 4, BLACK);
         }
-}
-
-void swap_grids(char ***a, char ***b) {
-    char **temp = *a;
-    *a = *b;
-    *b = temp;
 }
 
 void copy_grids() {
@@ -54,10 +47,10 @@ void copy_grids() {
           main_grid[i][j] = temp_grid[i][j];
           boolean resurrected = is_alive(i, j);
           if(resurrected && !was_alive)
-            Tft.lcd_fill_rect_fast(i*4+ 75, j*4 + 75, 4, 4, RED);
+            Tft.lcd_fill_rect_fast(i*4 + 75, j*4 + 75, 4, 4, RED);
           if (!resurrected && was_alive)
-            Tft.lcd_fill_rect_fast(i*4+ 75, j*4 + 75, 4, 4, BLACK);      
-          delayMicroseconds(50);       
+            Tft.lcd_fill_rect_fast(i*4 + 75, j*4 + 75, 4, 4, BLACK);
+          delayMicroseconds(50);
         }
     }
 }
@@ -105,8 +98,5 @@ boolean is_valid_index(uint8_t i, uint8_t j) {
 }
 
 boolean is_alive(uint8_t i, uint8_t j) {
-  if (is_valid_index(i, j)) {
-    return main_grid[i][j] == '1';
-  }
-  return false;
+  return is_valid_index(i, j) && main_grid[i][j] == '1';
 }

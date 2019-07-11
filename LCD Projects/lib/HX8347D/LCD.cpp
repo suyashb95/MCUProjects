@@ -90,7 +90,7 @@ void TFT::lcd_init()
 	lcd_write_register(0x08,0x01);
 	lcd_write_register(0x09,0x3F); //Row End
 
-    lcd_clear_screen(WHITE);
+    //lcd_clear_screen(WHITE);
 	__LCD_BKL_ON();
 }
 
@@ -418,6 +418,3 @@ void TFT::lcd_draw_rect(uint16_t hwXpos,  //specify x position.
 
 
 TFT Tft = TFT();
-/*********************************************************************************************************
-  END FILE
-*********************************************************************************************************/
