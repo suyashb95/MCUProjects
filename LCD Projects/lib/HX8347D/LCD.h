@@ -77,7 +77,7 @@
 
 #define __LCD_BKL_OUT()   pinMode(LCD_BKL_PIN, OUTPUT)
 #define __LCD_BKL_OFF()   digitalWrite(LCD_BKL_PIN, LOW)
-// #define __LCD_BKL_ON()    digitalWrite(LCD_BKL_PIN, HIGH)
+#define __LCD_BKL_ON()    digitalWrite(LCD_BKL_PIN, HIGH)
 
 #endif
 
