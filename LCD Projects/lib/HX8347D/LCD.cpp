@@ -347,18 +347,22 @@ void TFT::lcd_fill_rect_fast(uint16_t hwXpos,  //specify x position.
                    uint16_t hwHeight, //specify the height of the rectangle.
                    uint16_t hwColor)  //specify the color of rectangle.
 {
-	if (hwXpos >= LCD_WIDTH || hwYpos >= LCD_HEIGHT) {
+	if (hwXpos > LCD_WIDTH || hwYpos > LCD_HEIGHT) {
 		return;
 	}
 
-	lcd_set_area(hwXpos, hwYpos, hwXpos + hwWidth - 1, hwYpos + hwHeight);
+	uint32_t i, wCount = hwWidth;
+	wCount *= hwHeight;
+
+	lcd_set_cursor(hwXpos, hwYpos);
+	lcd_set_area(hwXpos, hwYpos, hwXpos + hwWidth, hwYpos + hwHeight);
 
 	lcd_write_byte(0x22, LCD_CMD);
 
 	__LCD_DC_SET();
 	__LCD_CS_CLR();
 
-	for(uint32_t i = 0; i < hwHeight * hwWidth ; i++) {
+	for(i = 0; i < wCount; i++) {
 		__LCD_WRITE_WORD(hwColor);
 	}
 	__LCD_CS_SET();
