@@ -22,25 +22,30 @@ void setup() {
 }
 
 void loop() {
+  calculate_next_generation();
+  render_grid_fast();
+}
+
+void calculate_next_generation() {
     for(uint8_t i=0; i<m; i++) {
         for(uint8_t j=0; j<n; j++) {
             temp_grid[i][j] = should_stay_alive_or_resurrect(i, j) ? '1': '0';
         }
-    }
-    copy_grids();
+    }    
 }
 
 void render_grid() {
     for (uint8_t i=0; i<m; i++)
         for (uint8_t j=0; j<n; j++) {
+            main_grid[i][j] = temp_grid[i][j];
             if(is_alive(i, j))
-                Tft.lcd_fill_rect_fast(i*4 + 75, j*4+ 75, 4, 4, RED);
+                Tft.lcd_fill_rect(i*4 + 75, j*4+ 75, 4, 4, RED);
             else
-                Tft.lcd_fill_rect_fast(i*4 + 75, j*4+ 75, 4, 4, BLACK);
+                Tft.lcd_fill_rect(i*4 + 75, j*4+ 75, 4, 4, BLACK);
         }
 }
 
-void copy_grids() {
+void render_grid_fast() {
     for(uint8_t i=0; i<m; i++) {
         for(uint8_t j=0; j<n; j++) {
           boolean was_alive = is_alive(i, j);
@@ -50,7 +55,6 @@ void copy_grids() {
             Tft.lcd_fill_rect_fast(i*4 + 75, j*4 + 75, 4, 4, RED);
           if (!resurrected && was_alive)
             Tft.lcd_fill_rect_fast(i*4 + 75, j*4 + 75, 4, 4, BLACK);
-          delayMicroseconds(50);
         }
     }
 }
@@ -68,11 +72,11 @@ void init_temp_grid() {
 }
 
 void set_r_pentonimo() {
-    main_grid[m/2][n/2] = '1';
-    main_grid[m/2][n/2+1] = '1';
-    main_grid[m/2][n/2-1] = '1';
-    main_grid[m/2-1][n/2] = '1';
-    main_grid[m/2+1][n/2+1] = '1';
+    temp_grid[m/2][n/2] = '1';
+    temp_grid[m/2][n/2+1] = '1';
+    temp_grid[m/2][n/2-1] = '1';
+    temp_grid[m/2-1][n/2] = '1';
+    temp_grid[m/2+1][n/2+1] = '1';
 }
 
 boolean should_stay_alive_or_resurrect(uint8_t i, uint8_t j) {

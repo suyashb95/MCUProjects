@@ -355,7 +355,7 @@ void TFT::lcd_fill_rect_fast(uint16_t hwXpos,  //specify x position.
 	wCount *= hwHeight;
 
 	lcd_set_cursor(hwXpos, hwYpos);
-	lcd_set_area(hwXpos, hwYpos, hwXpos + hwWidth, hwYpos + hwHeight);
+	lcd_set_area(hwXpos, hwYpos, hwXpos + hwWidth - 1, hwYpos + hwHeight - 1);
 
 	lcd_write_byte(0x22, LCD_CMD);
 
